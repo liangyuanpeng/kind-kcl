@@ -1,0 +1,19 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install
+      run: |
+        wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
+    - name: build
+      run: |
+        kcl run
