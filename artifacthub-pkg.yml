@@ -1,0 +1,28 @@
+version: 0.0.1
+name: kind-kcl
+displayName: kind-kcl
+createdAt: "2024-07-19T04:14:30Z"
+description: '`kind-kcl` is working for generate the kind configuration with KCL.'
+links:
+- name: KCL homepage
+  url: https://www.kcl-lang.io/
+- name: KCL repo
+  url: https://github.com/kcl-lang/kcl
+- name: kind homepage
+  url: https://kind.sigs.k8s.io/
+- name: kubeadm repo
+  url: https://github.com/kubernetes-sigs/kind
+install: |
+  #### Add `kind-kcl` with tag `0.0.1` as dependency
+  ```
+  kcl mod add oci://ghcr.io/liangyuanpeng/kind-kcl --tag 0.0.1
+  ```
+  #### Pull `kind-kcl` with tag `0.0.1` to local
+  ```
+  kcl mod pull oci://ghcr.io/liangyuanpeng/kind-kcl --tag 0.0.1
+  ```
+maintainers:
+- name: Lan Liang
+  email: gcslyp@gmail.com
+provider:
+  name: Lan Liang

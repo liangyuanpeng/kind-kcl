@@ -2,18 +2,68 @@ name: build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
   pull_request:
 
-jobs:
+env:
+  KIND_VERSION: v0.23.0
 
-  build:
+jobs:
+  test-kind-create:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: 
+        - kindest/node:v1.30.2
+        - kindest/node:v1.29.0
+        - kindest/node:v1.28.0
+        cpcount:
+        - 1
+        - 3
+        workercount:
+        - 0
+        - 1
+        - 3
     steps:
-    - uses: actions/checkout@v4
     - name: Install
       run: |
         wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
+    - name: install kind
+      run: |
+        wget https://kind.sigs.k8s.io/dl/latest/linux-amd64.tgz
+        tar xvfz linux-amd64.tgz
+        chmod +x kind 
+        mv kind /usr/local/bin/
+        rm -f linux-amd64.tgz
+        rm -f e2e-k8s.sh
+        #wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64
+        #chmod +x kind-linux-amd64
+        #mv kind-linux-amd64 /usr/local/bin/kind
+    - uses: actions/checkout@v4
+    - name: run
+      run: |
+        kcl run -D image=${{ matrix.image }} -D cpcount=${{ matrix.cpcount }} -D workercount=${{ matrix.workercount }}
     - name: build
       run: |
-        kcl run
+        #kcl run -D image=${{ matrix.image }} -D cpcount=${{ matrix.cpcount }} -D workercount=${{ matrix.workercount }}
+        kcl run -D image=${{ matrix.image }} -D cpcount=${{ matrix.cpcount }} -D workercount=${{ matrix.workercount }} | kind create cluster -v5 --wait 4m --retain --config=-
+        kubectl wait node --all --for condition=ready
+        kubectl wait --timeout=5m --for=condition=ready pods --namespace=kube-system --all
+        kubectl get node
+        kubectl get pod -A
+
+
+  test-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install
+      run: |
+        wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
+    - uses: actions/checkout@v4
+    - name: mod push
+      run: |
+        hack/test.sh
+      
+

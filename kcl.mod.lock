@@ -1,0 +1,15 @@
+[dependencies]
+  [dependencies.kind]
+    name = "kind"
+    full_name = "kind_0.0.2"
+    version = "0.0.2"
+    reg = "ghcr.io"
+    repo = "/kcl-lang/kind"
+    oci_tag = "0.0.2"
+  [dependencies.kubeadm]
+    name = "kubeadm"
+    full_name = "kubeadm_0.0.2"
+    version = "0.0.2"
+    reg = "ghcr.io"
+    repo = "kcl-lang/kubeadm"
+    oci_tag = "0.0.2"
