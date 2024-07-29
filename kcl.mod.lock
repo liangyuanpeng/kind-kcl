@@ -1,10 +1,14 @@
 [dependencies]
+  [dependencies.k8sconfig]
+    name = "k8sconfig"
+    full_name = "k8sconfig_0.0.1"
+    version = "0.0.1"
   [dependencies.kind]
     name = "kind"
     full_name = "kind_0.0.2"
     version = "0.0.2"
     reg = "ghcr.io"
-    repo = "/kcl-lang/kind"
+    repo = "kcl-lang/kind"
     oci_tag = "0.0.2"
   [dependencies.kubeadm]
     name = "kubeadm"

@@ -1,6 +1,7 @@
 import kind.v1alpha4 as kind
 import kubeadm.v1beta3 as kubeadm 
 import yaml
+import k8sconfig.v1 as k8sconfig
 
 _kubeadmpatches=[]
 
@@ -62,3 +63,6 @@ _result = [(lambda x: int -> int {
 kind.Cluster{
     nodes = _nodes
 }
+
+
+c=k8sconfig.KubeSchedulerConfiguration{}
