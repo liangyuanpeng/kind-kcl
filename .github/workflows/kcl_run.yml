@@ -1,0 +1,28 @@
+name: kcl run
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+
+jobs:
+  kcl-run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: 
+        - macos-12
+        - macos-13
+        - macos-14
+        - macos-14-large
+    steps:
+    - name: setup kcl
+      run: |
+        wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
+    - uses: actions/checkout@v4
+    - name: run
+      run: |
+        kcl run
