@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - main
-  pull_request:
+  # pull_request:
 
 env:
   KIND_VERSION: v0.26.0
@@ -32,7 +32,7 @@ jobs:
         - ubuntu-latest
         - ubuntu-24.04-arm
     steps:
-    - name: Install
+    - name: setup kcl
       run: |
         wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
     - name: install kind
@@ -66,16 +66,13 @@ jobs:
         kubectl get node
         kubectl get pod -A
 
-
   test-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Install
+    - name: setup kcl
       run: |
         wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
     - uses: actions/checkout@v4
     - name: mod push
       run: |
         hack/test.sh
-      
-
