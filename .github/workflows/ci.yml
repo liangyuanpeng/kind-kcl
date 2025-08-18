@@ -53,7 +53,7 @@ jobs:
         #wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64
         #chmod +x kind-linux-amd64
         #mv kind-linux-amd64 /usr/local/bin/kind
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: run
       run: |
         kcl run -D image=${{ matrix.image }} -D cpcount=${{ matrix.cpcount }} -D workercount=${{ matrix.workercount }}
@@ -73,7 +73,7 @@ jobs:
     - name: Install
       run: |
         wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: mod push
       run: |
         hack/test.sh
